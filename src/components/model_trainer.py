@@ -19,8 +19,8 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object,evaluate_models
-
-@dataclass
+ 
+@dataclass   ##The dataclass decorator is used to create classes that primarily store data, 
 class ModelTrainerConfig:
     trained_model_file_path=os.path.join("artifacts","model.pkl")
 
@@ -33,11 +33,12 @@ class ModelTrainer:
         try:
             logging.info("Split training and test input data")
             X_train,y_train,X_test,y_test=(
-                train_array[:,:-1],
-                train_array[:,-1],
+                train_array[:,:-1], #take out last coloumn and store everything in Xtrain
+                train_array[:,-1],  #last cououmn data as y trin
                 test_array[:,:-1],
                 test_array[:,-1]
             )
+            #dictionary of models
             models = {
                 "Random Forest": RandomForestRegressor(),
                 "Decision Tree": DecisionTreeRegressor(),
@@ -47,6 +48,8 @@ class ModelTrainer:
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor(),
             }
+
+            #Hyperparameter tuning
             params={
                 "Decision Tree": {
                     'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],

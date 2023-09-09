@@ -22,11 +22,12 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys)
     
+    #evaulaute model will have ntire report of model
 def evaluate_models(X_train, y_train,X_test,y_test,models,param):
     try:
         report = {}
 
-        for i in range(len(list(models))):
+        for i in range(len(list(models))): # go through all models
             model = list(models.values())[i]
             para=param[list(models.keys())[i]]
 
@@ -38,9 +39,9 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
 
             #model.fit(X_train, y_train)  # Train model
 
-            y_train_pred = model.predict(X_train)
+            y_train_pred = model.predict(X_train) #prediction on X train
 
-            y_test_pred = model.predict(X_test)
+            y_test_pred = model.predict(X_test) #prediction on X test
 
             train_model_score = r2_score(y_train, y_train_pred)
 
